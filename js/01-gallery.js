@@ -23,10 +23,21 @@ function onCreatGallery(galleryItems){
 const imageItem = onCreatGallery(galleryItems);
 galleryEl.insertAdjacentHTML('beforeend', imageItem);
 
+galleryEl.addEventListener('click', onOpenModal);
 
+function onOpenModal(event) {
+  event.preventDefault();
+  const instance = basicLightbox.create(`
+    <img src="${event.target.dataset.source}" width="800" height="600">
+`);
+  instance.show();
+  
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      instance.close()
+    }
+  });
 
-
-
-
+};
 
 console.log(galleryItems);
