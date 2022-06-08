@@ -26,12 +26,14 @@ galleryEl.insertAdjacentHTML('beforeend', imageItem);
 galleryEl.addEventListener('click', onOpenModal);
 
 function onOpenModal(event) {
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
   event.preventDefault();
   const instance = basicLightbox.create(`
     <img src="${event.target.dataset.source}" width="800" height="600">
 `);
   instance.show();
-  
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       instance.close()
