@@ -26,20 +26,26 @@ galleryEl.insertAdjacentHTML('beforeend', imageItem);
 galleryEl.addEventListener('click', onOpenModal);
 
 function onOpenModal(event) {
+  event.preventDefault();
+  
   if (event.target.nodeName !== "IMG") {
     return;
   }
-  event.preventDefault();
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="800" height="600">
-`);
+  
+
+  const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`, {
+    onShow: (instance) => console.log('onShow', instance),
+    onClose: (instance) => console.log('onClose', instance),
+  });
+  
+
   instance.show();
+  
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       instance.close()
     }
   });
-
 };
 
 console.log(galleryItems);
